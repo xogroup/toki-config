@@ -1,5 +1,5 @@
 {
-  "name": "toki-config",
+  "name": "@toki/toki-config",
   "version": "0.0.1",
   "private": false,
   "description": "Toki Configuration Loader",
