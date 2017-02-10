@@ -14,7 +14,7 @@ Lead Maintainer: [Rob Horrigan](https://github.com/robhorrigan)
 <!-- Security Scan from Snyk.io -->
 [![Known Vulnerabilities](https://snyk.io/test/github/xogroup/toki-config/badge.svg)](https://snyk.io/test/github/xogroup/toki-config)
 <!-- Security Scan from NSP -->
-
+[![NSP Status](https://nodesecurity.io/orgs/xo-group/projects/4e38f776-3a5a-42e4-9240-a88dab24f7a5/badge)](https://nodesecurity.io/orgs/xo-group/projects/4e38f776-3a5a-42e4-9240-a88dab24f7a5)
 
 <!-- End Badges -->
 <!-- Quick Example -->
