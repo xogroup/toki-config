@@ -10,6 +10,7 @@ Lead Maintainer: [Rob Horrigan](https://github.com/robhorrigan)
 <!-- Badges Go Here -->
 
 <!-- Build Status from Travis -->
+[![Build Status](https://travis-ci.org/xogroup/toki-config.svg?branch=master)](https://travis-ci.org/xogroup/toki-config)
 <!-- Security Scan from Snyk.io -->
 <!-- Security Scan from NSP -->
 
