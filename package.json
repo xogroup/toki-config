@@ -1,0 +1,34 @@
+{
+  "name": "toki-config",
+  "version": "0.0.1",
+  "private": false,
+  "description": "Toki Configuration Loader",
+  "main": "lib/implementation.js",
+  "scripts": {
+    "test": "lab -c test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/xogroup/toki-config.git"
+  },
+  "keywords": [
+    "toki-config"
+  ],
+  "author": "XO Group, Inc.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xogroup/toki-config/issues"
+  },
+  "homepage": "https://github.com/xogroup/tok-config#readme",
+  "devDependencies": {
+    "code": "^4.0.0",
+    "eslint-config-hapi": "^10.0.0",
+    "eslint-plugin-hapi": "^4.0.0",
+    "lab": "^12.1.0",
+    "sinon": "^1.17.7"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "ez-config": "^0.2.1"
+  }
+}

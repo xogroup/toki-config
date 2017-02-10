@@ -1,0 +1,26 @@
+{
+    "routes": [
+        {
+            "path"       : "/test",
+            "httpAction" : "GET",
+            "tags"       : ["api"],
+            "description": "Test endpoint for all clients",
+            "actions"    : [
+                {
+                    "name": "identities",
+                    "type": "toki.procedure.identities"
+                },
+                [
+                    {
+                        "name": "action 1",
+                        "type": "http"
+                    },
+                    {
+                        "name": "action 2",
+                        "type": "http"
+                    }
+                ]
+            ]
+        }
+    ]
+}
