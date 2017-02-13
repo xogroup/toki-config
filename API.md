@@ -2,8 +2,8 @@
 
 ### Instantiating
 
-Before Instantiating you must define an options object that specifies with configuration loading submodule you wish to use. Then to get an instance of the configuration loader, you
-require `toki-config` and call a `new` instance, passing in the options object.
+Before Instantiating you must define an options object that specifies which configuration loading submodule you wish to use. Then to get an instance of the configuration loader, you
+require `toki-config` and call a `new` instance of it, passing in the options object as an argument.
 
 ```Javascript
 const options = {

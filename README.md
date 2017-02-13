@@ -2,7 +2,7 @@
 > Loads configuration and returns it as an object <!-- Repo Brief Description -->
 
 <!-- Long Description -->
-This is the configuration loading device for Toki. It loads a Toki configuration from a configuration loader submodule that must be specified at instantiation. [Click here](https://github.com/xogroup/toki-config#currently-available-configuration-loaders) to view currently available configuration loaders.
+This is the configuration loading device for Toki. It loads a Toki configuration from a configuration loading submodule which must be specified at instantiation. [Click here](https://github.com/xogroup/toki-config#currently-available-configuration-loaders) to view currently available configuration loaders.
 
 <!-- Maintainer (Hint, probably you) -->
 Lead Maintainer: [Rob Horrigan](https://github.com/robhorrigan)
@@ -19,23 +19,11 @@ Lead Maintainer: [Rob Horrigan](https://github.com/robhorrigan)
 
 <!-- End Badges -->
 <!-- Quick Example -->
-## Install Dependencies
-Install the dependencies based on package.json.
-```Text
-make install
-```
-
-## Test Project
-Run tests locally.
-```Text
-make test
-```
-
 ## Getting Started
-Setup will depend on which configuration loader you want to use. In general, you will need to define your configuration to fit the [Toki Configuration Schema](https://github.com/xogroup/toki-config/blob/master/schema.md) and return an object meeting that specification from the submodule.
+Setup will depend on which configuration loading submodule you want to use. In general, you will need to define your configuration to fit the [Toki Configuration Schema](https://github.com/xogroup/toki-config/blob/master/schema.md) and use a configuration loading submodule to return an object meeting that specification to `toki-config`.
 
 ### Currently Available Configuration Loaders
-1. [toki-config-file](https://github.com/xogroup/toki-config) - Loads configuration from static file
+1. [toki-config-file](https://github.com/xogroup/toki-config-file) - Loads configuration from static file
   * See [example](https://github.com/xogroup/toki-config/blob/master/example.md) here.
 
 ### How to specify which Configuration Loader you want to use
@@ -50,6 +38,19 @@ const options = {
 }
 ```
 
+## Development Setup
+
+### Install Dependencies
+Install the dependencies based on package.json.
+```Text
+make install
+```
+
+### Test Project
+Run tests locally.
+```Text
+make test
+```
 <!-- Customize this if needed -->
 
 <!-- Anything Else (Sponsors, Links, Etc) -->
