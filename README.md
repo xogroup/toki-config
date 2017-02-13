@@ -80,35 +80,6 @@ Will load configuration at `config/production.js`
 
 ***
 
-```Javascript
-'use strict';
-
-const Promise = require('bluebird');
-const Config = require('toki-config');
-const config = new Config();
-
-const logConfig = () => {
-
-    config.get()
-        .then((configuration) => {
-            console.log(configuration.routes[0].path) // /example
-        })
-        .catch((err) => {
-            throw err;
-        });
-};
-
-module.exports = () => {
-
-    return Promise.resolve()
-        .bind()
-        .then(logConfig)
-        .catch(function(err) {
-            console.log(err);
-        })
-};
-```
-
 ## Configuration Schema
 
 ```Javascript

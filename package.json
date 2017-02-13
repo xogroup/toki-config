@@ -1,5 +1,5 @@
 {
-  "name": "@toki/toki-config",
+  "name": "toki-config",
   "version": "0.0.1",
   "private": false,
   "description": "Toki Configuration Loader",
@@ -10,6 +10,9 @@
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/xogroup/toki-config.git"
+  },
+  "engines": {
+    "node": ">=6.x.x"
   },
   "keywords": [
     "toki-config"
@@ -24,11 +27,12 @@
     "code": "^4.0.0",
     "eslint-config-hapi": "^10.0.0",
     "eslint-plugin-hapi": "^4.0.0",
+    "ez-config": "^0.2.1",
     "lab": "^12.1.0",
     "sinon": "^1.17.7"
   },
   "dependencies": {
-    "bluebird": "^3.4.7",
-    "ez-config": "^0.2.1"
+    "toki-config-file": "0.0.1",
+    "bluebird": "^3.4.7"
   }
 }

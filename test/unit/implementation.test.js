@@ -1,9 +1,8 @@
 'use strict';
 
 const Promise = require('bluebird');
-const Config = require('../../lib/implementation');
-
 const EventEmitter = require('events');
+const Config = require('../../lib/implementation');
 
 const EzConfig = require('ez-config');
 const Sinon = require('sinon');
@@ -19,7 +18,7 @@ const expect = Code.expect;
 const before = lab.before;
 const after = lab.after;
 
-let mockEzConfig;
+let EzConfigStub;
 
 describe('unit tests - implementation', () => {
 
@@ -45,13 +44,33 @@ describe('unit tests - implementation', () => {
         });
     });
 
+    it('should be accept an options argument on instantiation', () => {
+
+        return new Promise((resolve) => {
+
+            const options = {
+                'toki-config-file': {
+                    foo: 'bar'
+                }
+            };
+
+            const config = new Config(options);
+
+            expect(config.options).to.be.an.object();
+            expect(config.options['toki-config-file']).to.be.an.object();
+            expect(config.options['toki-config-file'].foo).to.equal('bar');
+
+            resolve();
+        });
+    });
+
     describe('with default configuration', () => {
 
         before(() => {
 
             return new Promise((resolve) => {
 
-                mockEzConfig = Sinon.stub(EzConfig, 'get', () => {
+                EzConfigStub = Sinon.stub(EzConfig, 'get', () => {
 
                     return DefaultConfig;
                 });
@@ -64,7 +83,7 @@ describe('unit tests - implementation', () => {
 
             return new Promise((resolve) => {
 
-                mockEzConfig.restore();
+                EzConfigStub.restore();
 
                 resolve();
             });
@@ -72,7 +91,13 @@ describe('unit tests - implementation', () => {
 
         it('should return configuration as an object', () => {
 
-            const config = new Config();
+            const options = {
+                'toki-config-file': {
+                    fizz: 'bazz'
+                }
+            };
+
+            const config = new Config(options);
             return config.get()
                 .then((result) => {
 
@@ -80,6 +105,17 @@ describe('unit tests - implementation', () => {
                     expect(result.routes).to.be.an.array();
                     expect(result.routes[0]).to.be.an.object();
                     expect(result.routes[0].path).to.equal('/default');
+                });
+        });
+
+        it('should error if no configuration options passed', () => {
+
+            const config = new Config();
+            return config.get()
+                .catch((err) => {
+
+                    expect(err).to.be.an.error();
+                    expect(err.message).to.equal('Valid configuration loader not detected');
                 });
         });
     });
@@ -90,7 +126,7 @@ describe('unit tests - implementation', () => {
 
             return new Promise((resolve) => {
 
-                mockEzConfig = Sinon.stub(EzConfig, 'get', () => {
+                EzConfigStub = Sinon.stub(EzConfig, 'get', () => {
 
                     return undefined;
                 });
@@ -103,7 +139,7 @@ describe('unit tests - implementation', () => {
 
             return new Promise((resolve) => {
 
-                mockEzConfig.restore();
+                EzConfigStub.restore();
 
                 resolve();
             });
@@ -111,7 +147,13 @@ describe('unit tests - implementation', () => {
 
         it('should return error if missing config', () => {
 
-            const config = new Config();
+            const options = {
+                'toki-config-file': {
+                    flim: 'flam'
+                }
+            };
+
+            const config = new Config(options);
             return config.get()
                 .catch((err) => {
 
