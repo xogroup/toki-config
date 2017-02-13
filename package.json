@@ -1,6 +1,6 @@
 {
   "name": "toki-config",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": false,
   "description": "Toki Configuration Loader",
   "main": "lib/implementation.js",
