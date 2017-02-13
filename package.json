@@ -32,7 +32,7 @@
     "sinon": "^1.17.7"
   },
   "dependencies": {
-    "toki-config-file": "0.0.2",
+    "toki-config-file": "0.0.3",
     "bluebird": "^3.4.7"
   }
 }
