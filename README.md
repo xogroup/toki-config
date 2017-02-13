@@ -2,7 +2,7 @@
 > Loads configuration and returns it as an object <!-- Repo Brief Description -->
 
 <!-- Long Description -->
-This is the configuration loading device for Toki.
+This is the configuration loading device for Toki. It loads a Toki configuration from a configuration loader submodule that must be specified at instantiation. [Click here](https://github.com/xogroup/toki-config#currently-available-configuration-loaders) to view currently available configuration loaders.
 
 <!-- Maintainer (Hint, probably you) -->
 Lead Maintainer: [Rob Horrigan](https://github.com/robhorrigan)
@@ -32,162 +32,22 @@ make test
 ```
 
 ## Getting Started
-To get started, create a `config` directory at the root of your project then add
-a `default.js` or `default.json` file with the following format:
+Setup will depend on which configuration loader you want to use. In general, you will need to define your configuration to fit the [Toki Configuration Schema](https://github.com/xogroup/toki-config/blob/master/schema.md) and return an object meeting that specification from the submodule.
 
-```Javascript
-'use strict';
+### Currently Available Configuration Loaders
+1. [toki-config-file](https://github.com/xogroup/toki-config) - Loads configuration from static file
+  * See [example](https://github.com/xogroup/toki-config/blob/master/example.md) here.
 
-const configuration = {
-    toki: {
-        routes: [
-            {
-                path       : '/example',
-                httpAction : 'GET',
-                tags       : ['api'],
-                description: 'Example endpoint',
-                actions    : [
-                    {
-                        name: 'action 1',
-                        type: 'http'
-                    },
-                    [
-                        {
-                            name: 'action 2',
-                            type: 'http'
-                        },
-                        {
-                            name: 'action 3',
-                            type: 'http'
-                        }
-                    ]
-                ]
-            }
-        ]
-    }
-};
+### How to specify which Configuration Loader you want to use
 
-module.exports = configuration;
-```
-OR
-```Javascript
-{
-    "toki": {
-        "routes": [
-            {
-                "path"       : "/example",
-                "httpAction" : "GET",
-                "tags"       : ["api"],
-                "description": "Example endpoint",
-                "actions"    : [
-                    {
-                        "name": "action 1",
-                        "type": "http"
-                    },
-                    [
-                        {
-                            "name": "action 2",
-                            "type": "http"
-                        },
-                        {
-                            "name": "action 3",
-                            "type": "http"
-                        }
-                    ]
-                ]
-            }
-        ]
-    }
-}
-```
-
-***
-
-NOTE: If set, toki-config will use your `NODE_ENV` to determine which configuration to load.
-```
-$: echo $NODE_ENV
-production
-```
-Will load configuration at `config/production.js` or `config/production.json`
-
-**Obeys the import hierarchy described [here](https://github.com/lorenwest/node-config/wiki/Configuration-Files)
-
-***
-
-## Configuration Schema
-
-<!-- TODO: Should link to schema definition in toki repo. -->
-
-```Javascript
-//executable action
-action  = Joi.object().keys({
-    name       : Joi.string(),
-
-    //type is the custom action to be invoked
-    type       : Joi.string(),
-
-    description: Joi.string().optional()
-}),
-
-//parallel actions
-actions = Joi.array().items(action).min(2),
-
-//route configuration
-routes  = Joi.object().keys({
-    path       : Joi.string(),
-    httpAction : Joi.string().valid('GET', 'POST'),
-    tags       : Joi.array().items(Joi.string()).min(1),
-    description: Joi.string(),
-    actions    : Joi.array().items(action, actions).min(1)
-}),
-
-//Final overall schema
-toki  = Joi.object().keys({
-    routes: Joi.array().items(routes).min(1)
-});
-```
-
-## Example usage
-
-This module requires a configuration object to get passed at instantiation.
-This must specify the name of the submodule to use to load the configuration and any options you wish to pass to the submodule.
+Toki-Config requires configuration options to be passed at time of instantiation.
+This object must specify the name of the submodule to use to load the configuration and any options you wish to pass to the submodule.
 ```Javascript
 const options = {
     'name-of-submodule': {
         foo: 'bar'
     }
 }
-```
-
-Then require and instantiate `toki-config` as follows:
-
-```Javascript
-'use strict';
-
-const Promise = require('bluebird');
-const Config = require('toki-config');
-const config = new Config(options);
-
-const logConfig = () => {
-
-    config.get()
-        .then((configuration) => {
-            console.log(configuration.routes[0].path) // /example
-        })
-        .catch((err) => {
-            throw err;
-        });
-};
-
-module.exports = () => {
-
-    return Promise.resolve()
-        .bind()
-        .then(logConfig)
-        .catch(function(err) {
-            console.log(err);
-        })
-};
 ```
 
 <!-- Customize this if needed -->
