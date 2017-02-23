@@ -16,20 +16,73 @@ const describe = lab.describe;
 const it = lab.it;
 const expect = Code.expect;
 const before = lab.before;
-const after = lab.after;
+
 
 let EzConfigStub;
 
 describe('unit tests - implementation', () => {
 
-    it('should be instantiated', () => {
+    before(() => {
 
         return new Promise((resolve) => {
 
-            const config = new Config();
-            expect(config).to.be.instanceof(Config);
-
+            EzConfigStub = Sinon.stub(EzConfig, 'get');
             resolve();
+        });
+    });
+
+    const options = {
+        'toki-config-file': {
+            foo: 'bar'
+        }
+    };
+
+    let config;
+
+    it('should error if no configuration options passed', () => {
+
+        const promise =  new Promise(() => {
+
+            config = new Config();
+
+            return config;
+        });
+
+        return promise
+                .catch((err) => {
+
+                    expect(err).to.be.an.error();
+                    expect(err.message).to.equal('No existing instance found to return');
+                });
+    });
+
+    before(() => {
+
+        EzConfigStub.returns(null);
+        return Promise.resolve();
+    });
+
+    it('should return error if missing config', () => {
+
+        config = new Config(options);
+        return config.get()
+            .catch((err) => {
+
+                expect(err).to.be.an.error();
+                expect(err.message).to.equal('Unable to load configuration');
+            });
+    });
+
+    it('should accept an options argument on instantiation', () => {
+
+        config = new Config();
+        return Promise.resolve()
+        .then(() => {
+
+            expect(config).to.be.instanceof(Config);
+            expect(config.options).to.be.an.object();
+            expect(config.options['toki-config-file']).to.be.an.object();
+            expect(config.options['toki-config-file'].foo).to.equal('bar');
         });
     });
 
@@ -37,30 +90,22 @@ describe('unit tests - implementation', () => {
 
         return new Promise((resolve) => {
 
-            const config = new Config();
+            config = new Config();
             expect(config).to.be.instanceof(EventEmitter);
 
-            resolve();
+            return resolve();
         });
     });
 
-    it('should be accept an options argument on instantiation', () => {
+    it('should be a singleton instance', () => {
 
-        return new Promise((resolve) => {
+        const config1 = new Config();
+        const config2 = new Config();
 
-            const options = {
-                'toki-config-file': {
-                    foo: 'bar'
-                }
-            };
+        return Promise.resolve()
+        .then(() => {
 
-            const config = new Config(options);
-
-            expect(config.options).to.be.an.object();
-            expect(config.options['toki-config-file']).to.be.an.object();
-            expect(config.options['toki-config-file'].foo).to.equal('bar');
-
-            resolve();
+            expect(config1).to.equal(config2);
         });
     });
 
@@ -68,36 +113,13 @@ describe('unit tests - implementation', () => {
 
         before(() => {
 
-            return new Promise((resolve) => {
-
-                EzConfigStub = Sinon.stub(EzConfig, 'get', () => {
-
-                    return DefaultConfig;
-                });
-
-                resolve();
-            });
-        });
-
-        after(() => {
-
-            return new Promise((resolve) => {
-
-                EzConfigStub.restore();
-
-                resolve();
-            });
+            EzConfigStub.returns(DefaultConfig);
+            return Promise.resolve();
         });
 
         it('should return configuration as an object', () => {
 
-            const options = {
-                'toki-config-file': {
-                    fizz: 'bazz'
-                }
-            };
-
-            const config = new Config(options);
+            config = new Config();
             return config.get()
                 .then((result) => {
 
@@ -105,60 +127,6 @@ describe('unit tests - implementation', () => {
                     expect(result.routes).to.be.an.array();
                     expect(result.routes[0]).to.be.an.object();
                     expect(result.routes[0].path).to.equal('/default');
-                });
-        });
-
-        it('should error if no configuration options passed', () => {
-
-            const config = new Config();
-            return config.get()
-                .catch((err) => {
-
-                    expect(err).to.be.an.error();
-                    expect(err.message).to.equal('Valid configuration loader not detected');
-                });
-        });
-    });
-
-    describe('with missing configuration', () => {
-
-        before(() => {
-
-            return new Promise((resolve) => {
-
-                EzConfigStub = Sinon.stub(EzConfig, 'get', () => {
-
-                    return undefined;
-                });
-
-                resolve();
-            });
-        });
-
-        after(() => {
-
-            return new Promise((resolve) => {
-
-                EzConfigStub.restore();
-
-                resolve();
-            });
-        });
-
-        it('should return error if missing config', () => {
-
-            const options = {
-                'toki-config-file': {
-                    flim: 'flam'
-                }
-            };
-
-            const config = new Config(options);
-            return config.get()
-                .catch((err) => {
-
-                    expect(err).to.be.an.error();
-                    expect(err.message).to.equal('Unable to load configuration');
                 });
         });
     });
