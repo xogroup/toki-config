@@ -1,0 +1,30 @@
+{
+    "routes": [
+        {
+            "path"       : "/fail",
+            "httpAction" : "fail",
+            "tags"       : ["fail"],
+            "description": "Default failure for all clients",
+            "actions"    : [
+                {
+                    "name": "foo",
+                    "type": "toki.procedure.identities"
+                },
+                [
+                    {
+                        "name": "bar 1",
+                        "type": "http"
+                    },
+                    {
+                        "name": "foo",
+                        "type": "http"
+                    }
+                ],
+                {
+                    "name": "bar 2",
+                    "type": "toki.procedure.identities"
+                }
+            ]
+        }
+    ]
+}
