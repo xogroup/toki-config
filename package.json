@@ -5,7 +5,7 @@
   "description": "Toki Configuration Loader",
   "main": "lib/implementation.js",
   "scripts": {
-    "test": "lab -c test"
+    "test": "lab -a code -c test"
   },
   "repository": {
     "type": "git",

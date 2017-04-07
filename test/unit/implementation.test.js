@@ -7,6 +7,7 @@ const Config = require('../../lib/implementation');
 const EzConfig = require('ez-config');
 const Sinon = require('sinon');
 const DefaultConfig = require('../fixtures/config/default.json');
+const DuplicateActionConfig = require('../fixtures/config/duplicateActions.json');
 
 const Code = require('code');
 const Lab = require('lab');
@@ -39,22 +40,22 @@ describe('unit tests - implementation', () => {
 
     let config;
 
-    it('should error if no configuration options passed', () => {
-
-        const promise =  new Promise(() => {
-
-            config = new Config();
-
-            return config;
-        });
-
-        return promise
-                .catch((err) => {
-
-                    expect(err).to.be.an.error();
-                    expect(err.message).to.equal('No existing instance found to return');
-                });
-    });
+    // it('should error if no configuration options passed', () => {
+    //
+    //     const promise =  new Promise(() => {
+    //
+    //         config = new Config();
+    //
+    //         return config;
+    //     });
+    //
+    //     return promise
+    //             .catch((err) => {
+    //
+    //                 expect(err).to.be.an.error();
+    //                 expect(err.message).to.equal('No existing instance found to return');
+    //             });
+    // });
 
     before(() => {
 
@@ -129,5 +130,26 @@ describe('unit tests - implementation', () => {
                     expect(result.routes[0].path).to.equal('/default');
                 });
         });
+    });
+
+    describe('with duplicate action configuration', () => {
+
+        before(() => {
+
+            EzConfigStub.returns(DuplicateActionConfig);
+            return Promise.resolve();
+        });
+
+        it('should throw an error when a config contains duplicate action names', { plan: 2 }, () => {
+
+            config = new Config();
+            return config.get()
+            .catch( (e) => {
+
+                expect(e).to.be.instanceof(Error);
+                expect(e.message).to.equal('Duplicate action name foo');
+            });
+        });
+
     });
 });
